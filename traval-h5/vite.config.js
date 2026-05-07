@@ -2,16 +2,19 @@ import {
   defineConfig
 } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vantResolver from 'unplugin-vue-components/resolvers'
+import {
+  VantResolver
+} from 'unplugin-vue-components/resolvers'
 import AutoImport from 'unplugin-auto-import/vite'
 import AutoRoutesPlugin from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue(),
+  plugins: [
+    vue(),
     AutoImport({
-      imports:['vue','vue-router'],
-      resolvers:[vantResolver()],
+      imports: ['vue', 'vue-router'],
+      resolvers: [VantResolver()],
       dts: '.typings/auto-import.d.ts',
       eslintrc: {
         enabled: true,
@@ -19,12 +22,12 @@ export default defineConfig({
       },
     }),
     AutoRoutesPlugin({
-      routerStyle:'nuxt',
+      routerStyle: 'nuxt',
       dirs: ['src/views'],
       exclude: ['**/components', '**/*.ts'],
     }),
     Components({
-      resolvers:[vantResolver()],
+      resolvers: [VantResolver()],
       globs: [
         'src/components/*.{vue,tsx}',
         'src/components/*/index.{vue,tsx}',
