@@ -1,0 +1,16 @@
+{
+  "name": "travel-server",
+  "version": "1.0.0",
+  "description": "ai travel agent server use node.js + express +LangChian",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
