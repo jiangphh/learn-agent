@@ -1,8 +1,9 @@
 import express from 'express'
-
+import travelRouter from './routes/travel.js'
+import 'dotenv/config'
 const app = express()
 
-const port = 3222
+const port = process.env.PORT
 
 // // 创建一个心跳接口
 // app.get('/heartbeat',(req,res)=>{
@@ -13,6 +14,16 @@ const port = 3222
 //     })
 // })
 
-app.listen(port,()=>{
+// 处理body,放在所有接口定义之前
+app.use(express.json())
+// 编码转换
+app.use(express.urlencoded({
+    extended: true
+}))
+
+// 创建一个中间件
+app.use('/api/travel', travelRouter)
+
+app.listen(port, () => {
     console.log(`server port:http://localhost:${port}`)
 })

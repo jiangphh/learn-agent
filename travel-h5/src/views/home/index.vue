@@ -5,7 +5,7 @@
             <div class="card search-card">
                   <van-form @submit="onSubmit">
                         <van-cell-group inset>
-                              <van-field v-model="formData.result" is-link readonly name="area" label="目的地" placeholder="点击选择省市区"
+                              <van-field v-model="formData.city" is-link readonly name="area" label="目的地" placeholder="点击选择省市区"
                                     @click="showArea = true" />
                               <van-popup v-model:show="showArea" destroy-on-close position="bottom">
                                     <van-area :area-list="areaList" :model-value="pickerValue" @confirm="onConfirm"
@@ -36,11 +36,13 @@ const onConfirm = ({ selectedValues, selectedOptions }) => {
             ? selectedValues[selectedValues.length - 1]
             : '';
       showArea.value = false;
-      formData.result = selectedOptions.map((item) => item.text).join('/');
+      console.log(selectedOptions)
+      // formData.city = selectedOptions.map((item) => item.text).join('/');
+      formData.city = selectedOptions[1].text
 };
 
 const formData=reactive({
-      result:'',
+      city:'',
       budget:'',
       days:''
 })
