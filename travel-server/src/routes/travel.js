@@ -1,9 +1,9 @@
 import express from 'express'
-
+import travelService from '../services/travelService.js'
 const router = express.Router()
 
 // 景点推荐
-router.post('/recommand', (req, res) => {
+router.post('/recommand', async(req, res) => {
     const {city,budget,days}=req.body
     // 判断参数
     if(!city||!budget||!days){
@@ -12,11 +12,13 @@ router.post('/recommand', (req, res) => {
             error:'缺少必要参数'
         })
     }
-    
-    return res.json({
-        message: '推荐景点',
-        time: new Date().toISOString()
-    })
+
+  const result= await  travelService.recommand(city, budget, days)
+    return res.json(result)
+    // return res.json({
+    //     message: '推荐景点',
+    //     time: new Date().toISOString()
+    // })
 })
 
 router.post('/chat', (req, res) => {
