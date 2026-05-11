@@ -3,7 +3,7 @@ import {
 } from '@langchain/openai'
 
 import {
-    HumanMessage
+    HumanMessage,SystemMessage
 } from '@langchain/core/messages'
 import 'dotenv/config'
 
@@ -135,8 +135,39 @@ class TravelService {
         ]
     }
 
-    //旅游地点推荐提示词
-
+    // 流式对话
+    async chat (message,streamCallback){
+        // 组装参数
+        const messages=[
+            new SystemMessage('你是一个友好的旅游助手，请用中文回答用户关于旅游的问题'),
+            new HumanMessage(message)
+        ]
+        try {
+            // 调用大模型获取流式响应
+            const stream =await this.llm.stream(message)
+            let fullResponse=''
+            for await(const chunk of stream){
+                const content=chunk.content || ''
+                // 如果返回的内容为空，就跳过
+                if(content.trim()===''){
+                    continue
+                }
+                fullResponse += content
+                if(streamCallback){
+                    streamCallback(content)
+                }
+            }
+            return {
+                success: true,
+                reply:fullResponse
+            }
+        } catch (error) {
+            return {
+                success:false,
+                error
+            }
+        }
+    }    
 
 
 
